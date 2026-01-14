@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>You Are Light</title>
+<title>You are seen</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 
@@ -107,7 +107,7 @@ let affirmations = {};
 let currentCategory = "";
 
 async function loadAffirmations() {
-    const response = await fetch("affirmations.json");
+    const response = await fetch("https://remlo-rhinestones.github.io/affirmations/affirmations.json");
     affirmations = await response.json();
 
     const categorySelect = document.getElementById("categorySelect");
@@ -140,4 +140,5 @@ loadAffirmations();
 
 </body>
 </html>
+
 
