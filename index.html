@@ -107,7 +107,9 @@ let affirmations = {};
 let currentCategory = "";
 
 async function loadAffirmations() {
-    const response = await fetch("https://remlo-rhinestones.github.io/affirmations/affirmations.json");
+    const response = await fetch(
+        "https://remlo-rhinestones.github.io/affirmations/affirmations.json?t=" + new Date().getTime()
+    );
     affirmations = await response.json();
 
     const categorySelect = document.getElementById("categorySelect");
@@ -140,5 +142,6 @@ loadAffirmations();
 
 </body>
 </html>
+
 
 
