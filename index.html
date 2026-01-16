@@ -130,7 +130,7 @@ let categoryQueue = {}; // Tracks remaining affirmations per category
 // Load JSON with cache-busting
 async function loadAffirmations() {
     const response = await fetch(
-        "https://remlo-rhinestones.github.io/affirmations/affirmations.json?t=" + new Date().getTime()
+        "https://remlos-rhinestone.github.io/affirmations/affirmations.json?t=" + new Date().getTime()
     );
     affirmations = await response.json();
 
@@ -202,3 +202,4 @@ loadAffirmations();
 
 </body>
 </html>
+
