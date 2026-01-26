@@ -85,8 +85,8 @@
         transform: translateY(0) !important;
     }
 
-    select {
-    padding: 10px 40px 10px 20px; /* space for the icon */
+   select {
+    padding: 10px 40px 10px 20px; /* space for icon */
     border-radius: 30px;
     border: none;
     font-size: 1rem;
@@ -99,13 +99,23 @@
     -moz-appearance: none;
     text-align: left;
 
-    /* Combine gradient + hamburger icon */
-    background:
-        linear-gradient(90deg, #a78bfa, #fbb6ce) /* your gradient */,
-        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="white" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>') no-repeat right 12px center;
-    background-size: 16px 16px, auto; /* size of the icon */
+    background: linear-gradient(90deg, #a78bfa, #fbb6ce);
+    color: white;
+    position: relative;
+}
+
+/* Hamburger icon as a pseudo-element */
+select::after {
+    content: '≡'; /* simple three-line symbol */
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 1.2rem;
     color: white;
 }
+
 
 
     select option {
@@ -256,6 +266,7 @@ loadAffirmations();
 
 </body>
 </html>
+
 
 
 
