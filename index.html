@@ -84,16 +84,17 @@
         transform: translateY(0) !important;
     }
 
-    /* SELECT WITH HAMBURGER */
-    .select-wrapper {
+    /* CUSTOM DROPDOWN */
+    .dropdown-wrapper {
         position: relative;
-        display: inline-block;
         width: 100%;
         max-width: 300px;
         margin-bottom: 20px;
+        cursor: pointer;
+        user-select: none;
     }
 
-    .select-wrapper select {
+    .dropdown-button {
         width: 100%;
         padding: 10px 45px 10px 20px;
         border-radius: 30px;
@@ -103,31 +104,57 @@
         font-weight: bold;
         background: linear-gradient(90deg, #a78bfa, #fbb6ce);
         color: white;
-        cursor: pointer;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         transition: background 0.3s ease;
     }
 
-    .select-wrapper select:hover {
+    .dropdown-button:hover {
         background: linear-gradient(90deg, #8b6cf9, #fbb6ce);
     }
 
-    .select-wrapper .hamburger {
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%) rotate(0deg);
+    .dropdown-button .hamburger {
         font-size: 1.3rem;
-        color: white;
-        pointer-events: none;
         transition: transform 0.3s ease;
     }
 
-    .select-wrapper.active .hamburger {
-        transform: translateY(-50%) rotate(90deg);
+    .dropdown-button.active .hamburger {
+        transform: rotate(90deg);
+    }
+
+    .dropdown-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(90deg, #a78bfa, #fbb6ce);
+        border-radius: 15px;
+        margin-top: 5px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        max-height: 200px;
+        overflow-y: auto;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 10;
+    }
+
+    .dropdown-list.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .dropdown-list div {
+        padding: 10px 20px;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+        transition: background 0.2s ease;
+    }
+
+    .dropdown-list div:hover {
+        background: rgba(255,255,255,0.2);
     }
 
     button {
@@ -180,9 +207,15 @@
 <div class="card">
     <div class="title">You Are Enough</div>
 
-    <div class="select-wrapper">
-        <select id="categorySelect"></select>
-        <span class="hamburger">☰</span>
+    <!-- Custom dropdown -->
+    <div class="dropdown-wrapper">
+        <div class="dropdown-button">
+            <span id="dropdownSelected">Select Category</span>
+            <span class="hamburger">☰</span>
+        </div>
+        <div class="dropdown-list" id="dropdownList">
+            <!-- options populated by JS -->
+        </div>
     </div>
 
     <div id="affirmation" class="affirmation">Loading...</div>
@@ -209,33 +242,27 @@ async function loadAffirmations() {
     );
     affirmations = await response.json();
 
-    const categorySelect = document.getElementById("categorySelect");
-    categorySelect.innerHTML = "";
+    const dropdownList = document.getElementById("dropdownList");
+    dropdownList.innerHTML = "";
 
     for (const category in affirmations) {
-        const option = document.createElement("option");
-        option.value = category;
+        const option = document.createElement("div");
         option.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-        categorySelect.appendChild(option);
+        option.dataset.value = category;
+        dropdownList.appendChild(option);
 
         categoryQueue[category] = shuffleArray([...affirmations[category]]);
     }
 
-    if (categorySelect.options.length > 0) {
-        categorySelect.value = categorySelect.options[0].value;
-        currentCategory = categorySelect.value;
-    }
-
-    newAffirmation();
-
-    categorySelect.addEventListener("change", () => {
-        currentCategory = categorySelect.value;
+    // Select first category by default
+    const firstCategory = Object.keys(affirmations)[0];
+    if (firstCategory) {
+        currentCategory = firstCategory;
+        document.getElementById("dropdownSelected").textContent = firstCategory.charAt(0).toUpperCase() + firstCategory.slice(1);
         newAffirmation();
-        selectWrapper.classList.remove('active'); // rotate back after selection
-    });
+    }
 }
 
-// Shuffle helper
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -244,7 +271,6 @@ function shuffleArray(array) {
     return array;
 }
 
-// Show affirmation
 function newAffirmation() {
     let queue = categoryQueue[currentCategory];
     if (!queue || queue.length === 0) return;
@@ -266,19 +292,37 @@ function newAffirmation() {
     }, 50);
 }
 
+// Initialize dropdown interactivity
+const dropdownButton = document.querySelector('.dropdown-button');
+const dropdownWrapper = document.querySelector('.dropdown-wrapper');
+const dropdownList = document.getElementById('dropdownList');
+const dropdownSelected = document.getElementById('dropdownSelected');
+
+dropdownButton.addEventListener('click', () => {
+    dropdownList.classList.toggle('active');
+    dropdownButton.classList.toggle('active');
+});
+
+// Close dropdown if click outside
+document.addEventListener('click', (e) => {
+    if (!dropdownWrapper.contains(e.target)) {
+        dropdownList.classList.remove('active');
+        dropdownButton.classList.remove('active');
+    }
+});
+
+// Select category
+dropdownList.addEventListener('click', (e) => {
+    if (e.target.dataset.value) {
+        currentCategory = e.target.dataset.value;
+        dropdownSelected.textContent = e.target.textContent;
+        newAffirmation();
+        dropdownList.classList.remove('active');
+        dropdownButton.classList.remove('active');
+    }
+});
+
 loadAffirmations();
-
-// Hamburger rotate JS
-const selectWrapper = document.querySelector('.select-wrapper');
-const selectEl = document.getElementById('categorySelect');
-
-selectEl.addEventListener('focus', () => {
-    selectWrapper.classList.add('active');
-});
-
-selectEl.addEventListener('blur', () => {
-    selectWrapper.classList.remove('active');
-});
 </script>
 
 </body>
