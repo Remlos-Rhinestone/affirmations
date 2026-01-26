@@ -86,27 +86,27 @@
     }
 
     select {
-        padding: 10px 20px;
-        border-radius: 30px;
-        border: none;
-        font-size: 1rem;
-        margin: 12px 0;
-        cursor: pointer;
-        font-family: inherit;
-        background: linear-gradient(90deg, #a78bfa, #fbb6ce);
-        color: white;
-        font-weight: bold;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        text-align: center;
+    padding: 10px 40px 10px 20px; /* space for the icon */
+    border-radius: 30px;
+    border: none;
+    font-size: 1rem;
+    margin: 12px 0;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-align: left;
 
-        /* Hamburger icon */
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="white" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>');
-        background-repeat: no-repeat;
-        background-position: right 12px center;
-        background-size: 16px 16px;
-    }
+    /* Combine gradient + hamburger icon */
+    background:
+        linear-gradient(90deg, #a78bfa, #fbb6ce) /* your gradient */,
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="white" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>') no-repeat right 12px center;
+    background-size: 16px 16px, auto; /* size of the icon */
+    color: white;
+}
+
 
     select option {
         color: #444;
@@ -256,5 +256,6 @@ loadAffirmations();
 
 </body>
 </html>
+
 
 
