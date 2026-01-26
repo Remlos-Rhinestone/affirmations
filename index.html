@@ -86,10 +86,11 @@
 
     /* CUSTOM DROPDOWN */
     .dropdown-wrapper {
+        position: relative; /* this makes the dropdown list stay inside the button */
         display: inline-block;
+        margin: 0 auto 20px; 
         cursor: pointer;
         user-select: none;
-        margin: 0 auto 20px;
     }
     .dropdown-button {
         min-width: 150px;  /* ensures it’s not too small */;
@@ -121,10 +122,10 @@
     }
 
     .dropdown-list {
-        position: absolute;
-        top: 100%;
+        position: absolute; /* relative to .dropdown-wrapper now */
+        top: 100%;          /* right below the button */
         left: 0;
-        width: 100%;
+        width: 100%;        /* match button width */
         background: linear-gradient(90deg, #a78bfa, #fbb6ce);
         border-radius: 15px;
         margin-top: 5px;
@@ -324,6 +325,7 @@ loadAffirmations();
 
 </body>
 </html>
+
 
 
 
