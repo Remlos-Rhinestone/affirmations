@@ -101,6 +101,36 @@
         color: #333;
         text-decoration: underline;
     }
+
+        /* --- Social Icons --- */
+    .socials {
+        margin-top: 35px;
+        text-align: center;
+        font-size: 1rem;
+        color: #444;
+    }
+
+    .icon-row {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 22px;
+    }
+
+    .icon-row img {
+        width: 32px;
+        height: 32px;
+        filter: invert(25%) sepia(18%) saturate(700%) hue-rotate(210deg) brightness(85%) contrast(90%);
+        transition: transform 0.2s ease, filter 0.2s ease;
+        cursor: pointer;
+    }
+
+    .icon-row img:hover {
+        transform: scale(1.15);
+        filter: invert(12%) sepia(90%) saturate(600%) hue-rotate(260deg) brightness(120%);
+    }
+
+
 </style>
 </head>
 <body>
@@ -120,6 +150,19 @@
         <a href="https://jedfoundation.org" target="_blank">JED Foundation (Teens & Mental Health)</a>
         <a href="https://teencounseling.com" target="_blank">Teen Counseling</a>
     </div>
+
+    <div class="socials">
+    <strong>Connect with Me</strong>
+    <div class="icon-row">
+        <a href="https://instagram.com/remlos_rhinestone" target="_blank">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram">
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61586148197286" target="_blank">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg" alt="Facebook">
+        </a>
+    </div>
+</div>
+
 </div>
 
 <script>
@@ -202,4 +245,5 @@ loadAffirmations();
 
 </body>
 </html>
+
 
